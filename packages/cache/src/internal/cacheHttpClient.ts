@@ -118,6 +118,9 @@ export async function getCacheEntry(
   const response = await retryTypedResponse('getCacheEntry', async () =>
     httpClient.getJson<ArtifactCacheEntry>(getCacheApiUrl(resource))
   )
+
+  core.debug(`Cache Entry Response: ${JSON.stringify(response)}`)
+  
   // Cache not found
   if (response.statusCode === 204) {
     // List cache for primary key only if cache miss occurs
@@ -152,6 +155,9 @@ async function printCachesListForDiagnostics(
   const response = await retryTypedResponse('listCache', async () =>
     httpClient.getJson<ArtifactCacheList>(getCacheApiUrl(resource))
   )
+
+  core.debug(`Cache Entry Response: ${JSON.stringify(response)}`)
+
   if (response.statusCode === 200) {
     const cacheListResult = response.result
     const totalCount = cacheListResult?.totalCount
